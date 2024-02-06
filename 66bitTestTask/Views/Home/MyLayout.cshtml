@@ -1,0 +1,29 @@
+﻿<partial name="~/Views/_ViewImports.cshtml" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" context="width=device-width, initial-scale=1.0">
+  <title>Soccer Players</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+  <link rel="stylesheet" href="~/css/site.css">
+</head>
+<body>
+  <header>
+    <nav>
+        @Html.ActionLink("Создать футболиста", "CreateSoccerPlayer", new {},
+                     new { style = "margin-right: 20px;" })
+        @Html.ActionLink("Список добавленных футболистов", "ShowSoccerPlayers")
+    </nav>
+  </header>
+  <hr>
+  <main>
+    @RenderBody()
+  </main>
+</body>
+</html> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+@RenderSection("Scripts")

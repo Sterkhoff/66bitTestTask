@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "MyLayout.cshtml";
+}
+@model SoccerPlayerViewModel
+
+
+<section id="players-list">
+    @if (ViewBag.FormMessage != null && ViewBag.PlayerWasUpdated)
+    {
+        <span style="display: block; color: forestgreen" id="form-confirmed-message">@ViewBag.FormMessage</span>
+    }
+    else if (ViewBag.FormMessage != null && !ViewBag.PlayerWasUpdated)
+    {
+        <span style="display: block; color: red" id="form-confirmed-message">@ViewBag.FormMessage</span>
+    }
+    @foreach(var playerModel in ViewBag.PlayersViewModels)
+    {
+        <article>
+            <div id="player-@playerModel.Id-data">
+                <p><strong>Имя: </strong><span id="first-name-data-@playerModel.Id">@playerModel.FirstName</span></p>
+                <p><strong>Фамилия: </strong><span id="last-name-data-@playerModel.Id"> @playerModel.LastName</span></p>
+                <p><strong>Пол: </strong><span id="gender-data-@playerModel.Id">@EnumHandler.GetDisplayName(playerModel.Gender)</span></p>
+                <p><strong>Дата рождения: </strong><span id="birth-date-data-@playerModel.Id">@playerModel.BirthDate</span></p>
+                <p><strong>Команда: </strong><span id="team-data-@playerModel.Id">@playerModel.Team</span></p>
+                <p><strong>Страна: </strong><span id="country-data-@playerModel.Id">@EnumHandler.GetDisplayName(playerModel.Country)</span></p>
+                <button onclick="toggleForm('@playerModel.Id')">Изменить</button>            
+            </div>
+            <partial name="_PlayersHandleFormPartial.cshtml" view-data='@new ViewDataDictionary(ViewData)
+                    {{"PlayerViewModel", playerModel}, {"FormType", "Update"}}' />
+        </article>
+    }
+</section>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}

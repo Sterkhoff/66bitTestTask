@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "MyLayout.cshtml";
+}
+@model SoccerPlayerViewModel
+
+@if (ViewBag.FormMessage != null && ViewBag.PlayerWasAdded)
+{
+    <span style="display: block; color: forestgreen" id="form-confirmed-message-1">@ViewBag.FormMessage</span>
+}
+else if (ViewBag.FormMessage != null && !ViewBag.PlayerWasAdded)
+{
+    <span style="display: block; color: red" id="form-confirmed-message-1">@ViewBag.FormMessage</span>
+}
+<partial name="_PlayersHandleFormPartial.cshtml" view-data='@new ViewDataDictionary(ViewData)
+{{"FormType", "Create"}}' />
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+}

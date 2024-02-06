@@ -1,0 +1,113 @@
+﻿@model SoccerPlayerViewModel
+@{
+    var playerModel = new SoccerPlayerViewModel();
+    var formType = (string)ViewData["FormType"];
+    if (formType == "Update")
+    {
+        playerModel = (SoccerPlayerViewModel)ViewData["PlayerViewModel"];
+    }
+}
+
+<div id="change-player-@playerModel.Id-form" style="display: @(formType == "Update" ? "none" : "block");">
+    <form asp-action='@(formType == "Update" ? "UpdateSoccerPlayer" : "AddSoccerPlayer")' method="post" id="update-form-@playerModel.Id">
+        <label>Имя</label>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+        <input asp-for="FirstName" type="text" id="first-name-@playerModel.Id" placeholder="Введите имя" value="@playerModel.FirstName">
+        <label>Фамилия</label>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+        <input asp-for="LastName" type="text" id="last-name-@playerModel.Id" placeholder="Введите фамилию" value="@playerModel.LastName">
+        <label>Пол</label>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+        <select asp-for="Gender" type="text" id="gender-@playerModel.Id" placeholder="Выберите значение">
+            @if (formType == "Update")
+            {
+                <option disabled value="">Выберите пол</option>
+            }
+            else
+            {
+                <option selected disabled value="">Выберите пол</option>
+            }
+            @foreach (var i in Html.GetEnumSelectList<Gender>())
+            {
+                if (i.Text == EnumHandler.GetDisplayName(playerModel.Gender) && formType == "Update")
+                {
+                    <option selected value="@((Gender)int.Parse(i.Value))">@(i.Text)</option>
+                }
+                else
+                {
+                    <option value="@((Gender)int.Parse(i.Value))">@(i.Text)</option>
+                }
+            }
+        </select>
+        <label>Дата рождения</label>
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+        <input asp-for="BirthDate" type="date" id="birth-date-@playerModel.Id"
+               value=@(formType == "Update" ? playerModel.BirthDate.ToString("o", CultureInfo.InvariantCulture) : "")>
+        <label>Название команды</label>
+        <span asp-validation-for="Team" class="text-danger"></span>
+        <select asp-for="Team" type="text" id="team-name-@playerModel.Id">
+            @if (ViewBag.Teams.Length == 0)
+            {
+                <option selected disabled value="">Добавленных команд нет</option>
+            }
+            else
+            {
+                if (formType == "Update")
+                {
+                    <option disabled value="">Выберите команду</option>
+                }
+                else
+                {
+                    <option selected disabled value="">Выберите команду</option>
+                }
+                foreach (var team in ViewBag.Teams)
+                {
+                    if (team.Name == playerModel.Team && formType == "Update")
+                    {
+                        <option selected value=@team.Name>@team.Name</option>
+                    }
+                    else
+                    {
+                        <option value=@team.Name>@team.Name</option>
+                    }
+                }
+            }
+        </select>
+        <input asp-for="Team" type="text" id="team-name-input-@playerModel.Id" style="display: none;" placeholder="Введите название команды" disabled>
+        <span style="margin-top: 10px; margin-bottom: 10px; display: block; font-size: smaller">или</span>
+        <button id="team-name-button-@playerModel.Id" form="create-member"
+                onclick="toggleTeamNameButton('@playerModel.Id')">
+            Добавить свою
+            команду
+        </button>
+        <br>
+        <label>Страна</label>
+        <span asp-validation-for="Country" class="text-danger"></span>
+        <select asp-for="Country" type="text" id="country-@playerModel.Id">
+            <@if (formType == "Update")
+            {
+                <option disabled value="">Выберите страну</option>
+            }
+            else
+            {
+                <option selected disabled value="">Выберите страну</option>
+            }
+            @foreach (var i in Html.GetEnumSelectList<Country>())
+            {
+                if (i.Text == EnumHandler.GetDisplayName(playerModel.Country) && formType == "Update")
+                {
+                    <option selected value="@((Country)int.Parse(i.Value))">@(i.Text)</option>
+                }
+                else
+                {
+                    <option value="@((Country)int.Parse(i.Value))">@(i.Text)</option>
+                }
+            }
+        </select>
+        <input asp-for="TeamIsNew" type="hidden" id="team-is-new-@playerModel.Id">
+        <input asp-for="Id" type="hidden" value=@playerModel.Id />
+        <button form="update-form-@playerModel.Id" onclick="confirmButtonScript('@playerModel.Id')">Подтвердить изменения</button>
+        <button form="" onclick="resetChanges('@playerModel.Id')">Отменить</button>
+    </form>
+</div>
+
