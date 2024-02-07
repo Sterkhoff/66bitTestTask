@@ -126,3 +126,4 @@ C:\Users\maksi\Документы\GitHub\66bitTestTask\66bitTestTask\bin\Debug\n
 C:\Users\maksi\Документы\GitHub\66bitTestTask\66bitTestTask\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\maksi\Документы\GitHub\66bitTestTask\66bitTestTask\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\maksi\Документы\GitHub\66bitTestTask\66bitTestTask\bin\Debug\net8.0\libman.json
+C:\Users\maksi\Документы\GitHub\66bitTestTask\66bitTestTask\obj\Debug\net8.0\66bitTestTask.sourcelink.json

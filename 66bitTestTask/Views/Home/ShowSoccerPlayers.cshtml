@@ -5,13 +5,17 @@
 
 
 <section id="players-list">
-    @if (ViewBag.FormMessage != null && ViewBag.PlayerWasUpdated)
+    @if (ViewBag.FormMessage != null)
     {
-        <span style="display: block; color: forestgreen" id="form-confirmed-message">@ViewBag.FormMessage</span>
-    }
-    else if (ViewBag.FormMessage != null && !ViewBag.PlayerWasUpdated)
-    {
-        <span style="display: block; color: red" id="form-confirmed-message">@ViewBag.FormMessage</span>
+        if (ViewBag.PlayerWasUpdated)
+        {
+            <span style="display: block; color: forestgreen" id="form-confirmed-message">@ViewBag.FormMessage
+            </span>
+        }
+        else 
+        {
+            <span style="display: block; color: red" id="form-confirmed-message">@ViewBag.FormMessage</span>
+        }
     }
     @foreach(var playerModel in ViewBag.PlayersViewModels)
     {

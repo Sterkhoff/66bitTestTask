@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("66bitTestTask")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d2280f18274426a46c6872184486bad7aeb46f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("66bitTestTask")]
 [assembly: System.Reflection.AssemblyTitleAttribute("66bitTestTask")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
