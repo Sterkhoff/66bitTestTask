@@ -35,27 +35,27 @@ namespace _66bitTestTask.Controllers
             return View();
         }
 
-        [HttpPost] 
+        [HttpPost]
         public async Task<IActionResult> UpdateSoccerPlayer(SoccerPlayerViewModel playerViewModel)
         {
             if (ModelState.IsValid)
             {
                 playerViewModel.Team = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(playerViewModel.Team);
-                var team = await _repo.GetTeamByName(playerViewModel.Team);                                   
+                var team = await _repo.GetTeamByName(playerViewModel.Team);
                 if (playerViewModel.TeamIsNew)
                 {
                     if (team != null)
                         return RedirectToAction("ShowSoccerPlayers",
                             new { formMessage = "Изменение не совершено, введённая команда уже существует, выберите её в списке команд" });
 
-                    team = new Team(playerViewModel.Team);                      
+                    team = new Team(playerViewModel.Team);
                     await _repo.AddTeam(team);
                 }
                 var newPlayer = _mapper.Map<SoccerPlayer>(playerViewModel);
                 newPlayer.Team = team;
                 await _repo.UpdatePlayerById(playerViewModel.Id, newPlayer);
                 await _hubContext.Clients.All.SendAsync("Receive");
-                return RedirectToAction("ShowSoccerPlayers", 
+                return RedirectToAction("ShowSoccerPlayers",
                     new { formMessage = "Изменение успешно совершено", playerWasUpdated = true });
             }
             else
@@ -92,18 +92,25 @@ namespace _66bitTestTask.Controllers
                 player.Team = team;
                 await _repo.AddSoccerPlayer(player);
                 await _hubContext.Clients.All.SendAsync("Receive");
-                return RedirectToAction("CreateSoccerPlayer", 
+                return RedirectToAction("CreateSoccerPlayer",
                     new { formMessage = "Футболист успешно добавлен", playerWasAdded = true });
             }
             else
-                return RedirectToAction("CreateSoccerPlayer", 
-                    new { formMessage = "Произошла ошибка сервера, попробуйте еще раз"});
+                return RedirectToAction("CreateSoccerPlayer",
+                    new { formMessage = "Произошла ошибка сервера, попробуйте еще раз" });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult DateValidation(DateOnly birthDate)
+        {
+            if (birthDate.AddYears(1) > DateOnly.FromDateTime(DateTime.Now))
+                return Json("Футболист должен быть старше одного года");
+            return Json(true);
         }
     }
 }
